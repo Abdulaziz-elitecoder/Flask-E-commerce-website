@@ -1,0 +1,82 @@
+{% extends 'base/index.html' %} {% block title %} product {% endblock%} {% block
+body %}
+
+<div id="header-div">
+  <h1 class="products-header">Products</h1>
+  <a
+    href="{{ url_for('category.create_category') }}"
+    class="btn btn-primary create"
+    >Create</a
+  >
+</div>
+<div class="categories-list">
+    <ul>
+        {% for category in categories %}
+            <li>
+                <p>Name: {{ category.name }}</p>
+                <p>Description: {{ category.description }}</p>
+                <ul>
+                    {% for product in category.products %}
+                        <li class="prdCat">{{ product.name }} - {{ product.price }}</li>
+                    {% endfor %}
+                </ul>
+                <form method="post" action="{{ url_for('category.category_delete', category_id=category.id) }}">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<style>
+  #header-div {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .products-header {
+    color: white;
+    font-size: 35px;
+  }
+
+  .create {
+    width: 100px;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: red;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 20pxpx;
+  }
+
+  .create:hover {
+    background-color: white;
+    color: black;
+  }
+
+  .categories-list ul {
+    list-style: none;
+    width: 600px;
+    height: 100px;
+    padding: 0;
+  }
+
+  .categories-list li {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    font-size: 18px;
+  }
+
+  .prdCat {
+    background-color: black !important;
+    color: white !important;
+    width: 400px;
+  }
+</style>
+{% endblock %}

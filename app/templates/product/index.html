@@ -1,0 +1,93 @@
+{% extends 'base/index.html' %} {% block title %} product {% endblock%} {% block
+body %}
+<style>
+  .products-header {
+    color: white;
+    transition : 0.5s;
+    border: 2px solid;
+    border-radius:5px;
+    padding:5px;
+  }
+  .products-header:hover {
+    background-color:yellow;
+    color:black;
+    border-radius:5px;
+
+  }
+
+  .row { margin-top: 5px}
+  .card {
+    width: 300px;
+    height: 400px;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  .card img {
+    width: 285px;
+    height: 235px;
+  }
+
+  #header-div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .create {
+    padding:5px;
+    height: 50px;
+    width: 100px;
+    background-color: black;
+    border: 2px solid white;
+    border-radius: 5px;
+    font-size: 20px !important;
+    transition: .5s
+  }
+
+  .create:hover {
+    background-color: yellow;
+    color: black;
+    border: 2px solid black;
+    transform:scale(1.1)
+  }
+</style>
+</br>
+<div id="header-div">
+  <h1 class="products-header">Products</h1>
+  <a href="{{ url_for('products.products_create') }}" class="btn btn-primary create">create</a>
+</div>
+
+<div class="container">
+  <div class="row" >
+    {% for product in products %}
+    <div class="col-md-4">
+      <div class="card">
+        <img src="{{ url_for('static',
+        filename=product.image.split("/")[-1].replace('\\', '/')) }}"
+        class="card-img-top" alt="Product Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">Price: ${{ product.price }}</p>
+
+          <div style="display: flex; justify-content: space-around">
+            <a href="{{ url_for('products.products_details', product_id=product.id) }}" class="btn btn-warning">details</a>
+            <a href="{{ url_for('products.products_edit', product_id=product.id) }}" class="btn btn-secondary">Edit</a>
+            <form
+              method="POST"
+              action="{{ url_for('products.delete_product', product_id=product.id) }}">
+              <input type="hidden" name="_method" value="DELETE" />
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

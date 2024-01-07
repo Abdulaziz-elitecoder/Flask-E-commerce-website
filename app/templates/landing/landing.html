@@ -1,0 +1,23 @@
+{% extends 'base/index.html' %}
+
+{% block title %} Profile {% endblock%}
+
+{% block body %}
+
+    <h1> This my home page in flask </h1>
+    <h1> List all courses </h1>
+        {{ products }}
+    <table class="table" >
+        <tr> <th> ID</th> <th> Name</th> <th>Desc</th>
+            <th>Price</th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td> {{product['id']}}</td>
+                 <td> {{product['name']}}</td>
+                 <td> {{product['description']}}</td>
+                 <td> {{product['price']}}$</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

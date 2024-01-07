@@ -1,0 +1,102 @@
+{% extends 'base/index.html' %} {% block title %} product {% endblock%} 
+{% block body %}
+    <h1 id="edit-header">Edit Product</h1>
+    <div id="edit-container">
+
+    <form id="edit-form" method="POST" action="{{ url_for('products.products_edit', product_id=product.id) }}" enctype="multipart/form-data">
+        <div>
+            <label for="name">Product Name:</label>
+            <input type="text" name="name" id="name" value="{{ product.name }}" required>
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" required>{{ product.description }}</textarea>
+        </div>
+
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" name="price" id="price" value="{{ product.price }}" required>
+        </div>
+
+        <div>
+            <label for="image">Image:</label>
+            <input type="file" name="image" id="image" accept="image/*">
+        </div>
+
+        <div>
+            <label for="category">Category:</label>
+            <select name="category" id="category">
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == product.category_id %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <input type="submit" value="Save Changes">
+    </form>
+    <a href="{{ url_for('products.products_index') }}">Back to Product List</a>
+</div>
+    <style>
+        #edit-header {
+            margin-top:50px;
+            color: #fff;
+            font-size:40px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        #edit-container {
+            box-sizing: border-box;
+            margin-top:200px;
+            width: 420px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #edit-form {
+            margin: 20px 0;
+            width: 400px;
+        }
+        #edit-form label {
+            font-weight: bold;
+        }
+        #edit-form input[type="text"],
+        #edit-form input[type="number"],
+        #edit-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        #edit-form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        #edit-form input[type="submit"] {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #edit-form input[type="submit"]:hover {
+            background: #0056b3;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+    {% endblock %}
